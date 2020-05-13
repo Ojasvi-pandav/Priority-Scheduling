@@ -1,0 +1,72 @@
+#include<stdio.h>            //standard header file  
+#define max 30              //global variable max  
+int main()  
+{   
+
+//local variables  
+  int i,n,j,t,bt[max],wt[max],p[max],pr[max],tat[max],pos;   
+  float avg_wt=0,avg_tat=0;     
+  
+  printf("Enter the total number of Process: ");    
+  scanf("%d",&n);   
+  
+  printf("\nEnter the burst time of the process :");   
+  for(i=0;i<n;i++)   
+   {     
+   printf("\np[%d] :",i+1);   
+   scanf("%d",&bt[i]);   
+   }  
+  
+  printf("\nEnter the Priority of the process:");      
+   for(i=0;i<n;i++)   
+   {   
+   printf("\np[%d] :",i+1);   
+   scanf("%d",&pr[i]);   
+   }   
+  
+  //sorting burst time, priority and process number in ascending order using selection sort   
+  for(i=0;i<n;i++)   
+   {     
+    pos=i;     
+     for(j=i+1;j<n;j++)     
+      {       
+       if(pr[j]<pr[pos])       
+        {               
+         pos=j;  
+        }      
+       }     
+    
+    //sorting priority        
+      t=pr[i];        
+      pr[i]=pr[pos];        
+      pr[pos]=t;        
+      
+    //sorting busrst time         
+      t=bt[i];         
+      bt[i]=bt[pos];         
+      bt[pos]=t;     
+     }     
+     
+     wt[0]=0;                         //waiting time for first process is zero   
+     
+     printf("process\tburst time\tpriority\twaiting time\tturn around time\n");    
+      for(i=0;i<n;i++)   
+       {     
+         wt[i]=0;        
+         tat[i]=0;     
+          for(j=0;j<i;j++)     
+            {           
+              wt[i]=wt[i]+bt[j];     
+            }        
+            tat[i]=wt[i]+bt[i];     
+            avg_wt=avg_wt+wt[i];       
+            avg_tat=avg_tat+tat[i];        
+            printf("%d\t\t\t%d\t\t\t%d\t\t\t%d\t\t\t\t\t\%d\n",i+1,bt[i],pr[i],wt[i],tat[i]);   
+        }   
+        
+        avg_wt=avg_wt/n;    
+        avg_tat=avg_tat/n;    
+        
+        printf("\nAverage waiting time=%f\n",avg_wt);    
+        printf("Average turn around time=%f\n",avg_tat); 
+     }
